@@ -21,11 +21,20 @@ import os
 import sys
 import json
 import yaml
+import shutil
 import argparse
+import platform
+import functools
+
+from datetime import datetime
 
 from jinja2 import Template, Environment, FileSystemLoader
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Tuple, List
+
+
+p_err = functools.partial(print, file=sys.stderr)
+p_out = functools.partial(print, file=sys.stdout)
 
 
 def parse_args() -> argparse.Namespace:
@@ -45,7 +54,16 @@ def parse_args() -> argparse.Namespace:
                         choices=['yaml', 'json'],
                         default='yaml',
                         help='input file format')
+    parser.add_argument('-x', '--extra', action="append",
+                        default=[],
+                        help='extra variables')
+    parser.add_argument('-v', '--verbose', action="store_true",
+                        help='verbose output')
     return parser.parse_args()
+
+
+def parse_extra(extra: List[str]) -> Dict:
+    return dict(x.split('=') for x in extra)
 
 
 def get_template(path: Path, env: Environment) -> Template:
@@ -53,7 +71,7 @@ def get_template(path: Path, env: Environment) -> Template:
 
 
 def load_context(fp: io.TextIOWrapper, loader: callable) -> Dict[str, Any]:
-    return loader(fp)
+    return loader(fp) or {}
 
 
 def loaders() -> Dict[str, callable]:
@@ -83,8 +101,32 @@ def render_template(template: Path,
     output.flush()
 
 
+def default_context() -> Dict[str, Any]:
+    return {
+        "meta": {
+            "date": datetime.utcnow(),
+            "platform": dict(platform.uname()._asdict())
+        }
+    }
+
+
+def tty_size() -> Tuple[int, int]:
+    return shutil.get_terminal_size((20, 1))
+
+
+def print_context(ctx: Dict[str, Any], width: int = 12) -> None:
+    p_err(yaml.dump(ctx, default_flow_style=False, indent=2, width=width))
+    p_err("=" * width)
+    p_err("")
+
+
 def main():
     args = parse_args()
+    extra = parse_extra(args.extra)
     env = create_environment(Path(os.path.curdir))
-    ctx = load_context(args.context, get_loader(args.format))
+    ctx = default_context()
+    ctx.update(load_context(args.context, get_loader(args.format)))
+    ctx.update(extra)
+    if args.verbose:
+        print_context(ctx, tty_size()[0])
     render_template(args.template, env, ctx, args.output)
