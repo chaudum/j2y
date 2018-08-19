@@ -11,17 +11,14 @@ import yaml
 import shutil
 import argparse
 import platform
-import functools
 
 from datetime import datetime
 
-from jinja2 import Template, Environment, FileSystemLoader
 from pathlib import Path
 from typing import Any, Dict, Tuple, List
+from jinja2 import Template, Environment, FileSystemLoader
 
-
-p_err = functools.partial(print, file=sys.stderr)
-p_out = functools.partial(print, file=sys.stdout)
+from .util import parse_extra, tty_size, print_stderr
 
 
 def parse_args() -> argparse.Namespace:
@@ -47,10 +44,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('-v', '--verbose', action="store_true",
                         help='print template context to stderr')
     return parser.parse_args()
-
-
-def parse_extra(extra: List[str]) -> Dict:
-    return dict(x.split('=') for x in extra)
 
 
 def get_template(path: Path, env: Environment) -> Template:
@@ -80,12 +73,15 @@ def create_environment(path: Path) -> Environment:
 
 def render_template(template: Path,
                     env: Environment,
-                    context: Dict[str, Any],
-                    output: io.TextIOWrapper) -> None:
+                    context: Dict[str, Any]) -> str:
     tpl = get_template(template, env)
-    output.write(tpl.render(**context))
-    output.write('\n')
-    output.flush()
+    return tpl.render(**context)
+
+
+def write(output: str, fd: io.TextIOWrapper) -> None:
+    fd.write(tpl.render(**context))
+    fd.write('\n')
+    fd.flush()
 
 
 def default_context() -> Dict[str, Any]:
@@ -95,10 +91,6 @@ def default_context() -> Dict[str, Any]:
             "platform": dict(platform.uname()._asdict())
         }
     }
-
-
-def tty_size() -> Tuple[int, int]:
-    return shutil.get_terminal_size((20, 1))
 
 
 def print_context(ctx: Dict[str, Any], width: int = 12) -> None:
@@ -116,4 +108,4 @@ def main():
     ctx.update(extra)
     if args.verbose:
         print_context(ctx, tty_size()[0])
-    render_template(args.template, env, ctx, args.output)
+    write(render_template(args.template, env, ctx), args.output)
