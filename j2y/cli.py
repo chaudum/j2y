@@ -1,19 +1,6 @@
 #!/usr/bin/env python3
 """
-
-j2y - a super simple Jinja2 command line interface
-
-Example usage::
-
-    >>> cat values.yaml
-    name: christian
-
-    >>> cat template.j2
-    Hello {{ name | upper }}!
-
-    >>> j2y template.j2 < values.yaml
-    Hello CHRISTIAN!
-
+j2y - a super simple Jinja2 templating command line interface
 """
 
 import io
@@ -38,14 +25,14 @@ p_out = functools.partial(print, file=sys.stdout)
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description='Jinja2 CLI')
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('template',
                         type=Path,
-                        help='path of the template')
+                        help='path of the Jinja template')
     parser.add_argument('-c', '--context',
                         type=argparse.FileType('r'),
                         default=sys.stdin,
-                        help='input file, defaults to stdin')
+                        help='input file for template context, defaults to stdin')
     parser.add_argument('-o', '--output',
                         type=argparse.FileType('w'),
                         default=sys.stdout,
@@ -56,9 +43,9 @@ def parse_args() -> argparse.Namespace:
                         help='input file format')
     parser.add_argument('-x', '--extra', action="append",
                         default=[],
-                        help='extra variables')
+                        help='provide extra variables for template context via cli using key=value pair')
     parser.add_argument('-v', '--verbose', action="store_true",
-                        help='verbose output')
+                        help='print template context to stderr')
     return parser.parse_args()
 
 
