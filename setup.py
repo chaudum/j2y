@@ -25,7 +25,7 @@ setup(
     long_description=long_description,
     platforms=['any'],
     license='Apache License 2.0',
-    packages=find_packages('src'),
+    packages=['j2y'],
     entry_points={
         'console_scripts': [
             'j2y = j2y.cli:main',
