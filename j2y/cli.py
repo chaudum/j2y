@@ -79,7 +79,7 @@ def render_template(template: Path,
 
 
 def write(output: str, fd: io.TextIOWrapper) -> None:
-    fd.write(tpl.render(**context))
+    fd.write(output)
     fd.write('\n')
     fd.flush()
 
