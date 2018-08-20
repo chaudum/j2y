@@ -94,9 +94,9 @@ def default_context() -> Dict[str, Any]:
 
 
 def print_context(ctx: Dict[str, Any], width: int = 12) -> None:
-    p_err(yaml.dump(ctx, default_flow_style=False, indent=2, width=width))
-    p_err("=" * width)
-    p_err("")
+    print_stderr(yaml.dump(ctx, default_flow_style=False, indent=2, width=width))
+    print_stderr("=" * width)
+    print_stderr("")
 
 
 def main():
