@@ -6,6 +6,7 @@ j2y - a super simple Jinja2 templating command line interface
 import io
 import os
 import sys
+import hcl
 import json
 import yaml
 import shutil
@@ -35,7 +36,7 @@ def parse_args() -> argparse.Namespace:
                         default=sys.stdout,
                         help='output file, defaults to stdout')
     parser.add_argument('-f', '--format',
-                        choices=['yaml', 'json'],
+                        choices=loaders().keys(),
                         default='yaml',
                         help='input file format')
     parser.add_argument('-x', '--extra', action="append",
@@ -58,6 +59,7 @@ def loaders() -> Dict[str, callable]:
     return {
         'yaml': lambda fp: yaml.load(fp.read()),
         'json': lambda fp: json.load(fp),
+        'hcl': lambda fp: hcl.load(fp),
     }
 
 

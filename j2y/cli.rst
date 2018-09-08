@@ -38,7 +38,7 @@ Parse program invokation without arguments::
 
   >>> out = parse_args_safe(['j2y'])
   >>> print(out)
-  usage: j2y [-h] [-c CONTEXT] [-o OUTPUT] [-f {yaml,json}] [-x EXTRA] [-v]
+  usage: j2y [-h] [-c CONTEXT] [-o OUTPUT] [-f {yaml,json,hcl}] [-x EXTRA] [-v]
              template
   j2y: error: the following arguments are required: template
 
