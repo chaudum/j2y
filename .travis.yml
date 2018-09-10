@@ -1,0 +1,11 @@
+sudo: false
+language: python
+cache: pip
+python:
+  - 3.6
+install:
+  - pip install -e .
+script:
+  - python j2y/tests.py
+notifications:
+  email: true
