@@ -20,6 +20,7 @@ from typing import Any, Dict, Tuple, List
 from jinja2 import Template, Environment, FileSystemLoader
 
 from .util import parse_extra, tty_size, print_stderr
+from .filters import registry as filter_registry
 
 
 def parse_args() -> argparse.Namespace:
@@ -68,9 +69,11 @@ def get_loader(format: str) -> callable:
 
 
 def create_environment(path: Path) -> Environment:
-    return Environment(
+    env = Environment(
         loader=FileSystemLoader(str(path.absolute()))
     )
+    env.filters.update(filter_registry)
+    return env
 
 
 def render_template(template: Path,
