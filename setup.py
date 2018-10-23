@@ -33,6 +33,8 @@ setup(
     },
     python_requires='>=3.6',
     install_requires=requirements,
+    setup_requires=['setuptools_scm'],
+    use_scm_version=True,
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
