@@ -7,7 +7,11 @@ as input for the render context.
 Installation
 ------------
 
-``j2y`` can be installed using ``pip``::
+``j2y`` is installed using ``pip``::
+
+  pip install j2y
+
+Alternatively you can install directly from Github master branch::
 
   pip install git+https://github.com/chaudum/j2y.git@master
 
