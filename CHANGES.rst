@@ -5,6 +5,8 @@ Changelog
 Unreleased
 ==========
 
+- *[FEATURE]* Provide environment variables as template variable ``env``.
+
 2018/10/23 0.1.0
 ================
 

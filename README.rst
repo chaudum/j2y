@@ -38,6 +38,27 @@ Alternatively you can use JSON_ or HCL_ as input format::
 
 Run ``j2y -h`` to see all available options.
 
+Template Variables
+..................
+
+Additionally to the variables provided by the input file, ``j2y`` also provides
+built-in default variables. These variables are:
+
+:meta.date:
+  Type:  ``datetime``
+
+  Value: Current UTC datetime object
+
+:meta.platform:
+  Type:  ``dict``
+
+  Value: Output of ``platform.uname()``
+
+:env:
+  Type:  ``dict``
+
+  Value: All environment variables (output of ``os.environ``).
+
 ⚗️ Local Development
 -------------------
 
