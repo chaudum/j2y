@@ -1,6 +1,15 @@
 j2y - A Jinja2 Template CLI
 ===========================
 
+.. image:: https://travis-ci.org/chaudum/j2y.svg?branch=master
+    :target: https://travis-ci.org/chaudum/j2y
+
+.. image:: https://badge.fury.io/py/j2y.svg
+    :target: http://badge.fury.io/py/j2y
+    :alt: Python Package Index
+
+|
+
 Render Jinja2 templates on the command line using a YAML_, JSON_ or HCL_ file
 as input for the render context.
 
