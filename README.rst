@@ -13,8 +13,8 @@ j2y - A Jinja2 Template CLI
 Render Jinja2 templates on the command line using a YAML_, JSON_ or HCL_ file
 as input for the render context.
 
-Installation
-------------
+💽 Installation
+--------------
 
 ``j2y`` is installed using ``pip``::
 
@@ -24,8 +24,8 @@ Alternatively you can install directly from Github master branch::
 
   $ pip install git+https://github.com/chaudum/j2y.git@master
 
-Usage
------
+👩‍💻 Usage
+---------
 
 By default, ``j2y`` takes a YAML_ file as input::
 
@@ -38,8 +38,8 @@ Alternatively you can use JSON_ or HCL_ as input format::
 
 Run ``j2y -h`` to see all available options.
 
-Local Development
------------------
+⚗️ Local Development
+-------------------
 
 Bootstrapping
 .............
