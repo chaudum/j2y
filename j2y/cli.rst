@@ -48,7 +48,7 @@ Parse default arguments::
   >>> args.template
   PosixPath('template.j2')
   >>> args.context
-  <_io.TextIOWrapper name='<stdin>' mode='r' encoding='UTF-8'>
+  <_pytest.capture.DontReadFromInput object at 0x...>
   >>> args.extra
   []
   >>> args.format

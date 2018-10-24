@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 j2y - a super simple Jinja2 templating command line interface
 """
@@ -9,14 +8,13 @@ import sys
 import hcl
 import json
 import yaml
-import shutil
 import argparse
 import platform
 
 from datetime import datetime
 
 from pathlib import Path
-from typing import Any, Dict, Tuple, List
+from typing import Any, Callable, Dict
 from jinja2 import Template, Environment, FileSystemLoader
 
 from .util import parse_extra, tty_size, print_stderr
@@ -25,26 +23,38 @@ from .filters import registry as filter_registry
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('template',
-                        type=Path,
-                        help='path of the Jinja template')
-    parser.add_argument('-c', '--context',
-                        type=argparse.FileType('r'),
-                        default=sys.stdin,
-                        help='input file for template context, defaults to stdin')
-    parser.add_argument('-o', '--output',
-                        type=argparse.FileType('w'),
-                        default=sys.stdout,
-                        help='output file, defaults to stdout')
-    parser.add_argument('-f', '--format',
-                        choices=loaders().keys(),
-                        default='yaml',
-                        help='input file format')
-    parser.add_argument('-x', '--extra', action="append",
-                        default=[],
-                        help='provide extra variables for template context via cli using key=value pair')
-    parser.add_argument('-v', '--verbose', action="store_true",
-                        help='print template context to stderr')
+    parser.add_argument("template", type=Path, help="path of the Jinja template")
+    parser.add_argument(
+        "-c",
+        "--context",
+        type=argparse.FileType("r"),
+        default=sys.stdin,
+        help="input file for template context, defaults to stdin",
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        type=argparse.FileType("w"),
+        default=sys.stdout,
+        help="output file, defaults to stdout",
+    )
+    parser.add_argument(
+        "-f",
+        "--format",
+        choices=loaders().keys(),
+        default="yaml",
+        help="input file format",
+    )
+    parser.add_argument(
+        "-x",
+        "--extra",
+        action="append",
+        default=[],
+        help="provide extra variables for template context via cli using key=value pair",
+    )
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="print template context to stderr"
+    )
     return parser.parse_args()
 
 
@@ -52,40 +62,36 @@ def get_template(path: Path, env: Environment) -> Template:
     return env.get_template(str(path))
 
 
-def load_context(fp: io.TextIOWrapper, loader: callable) -> Dict[str, Any]:
+def load_context(fp: io.TextIOWrapper, loader: Callable) -> Dict[str, Any]:
     return loader(fp) or {}
 
 
-def loaders() -> Dict[str, callable]:
+def loaders() -> Dict[str, Callable]:
     return {
-        'yaml': lambda fp: yaml.load(fp.read()),
-        'json': lambda fp: json.load(fp),
-        'hcl': lambda fp: hcl.load(fp),
+        "yaml": lambda fp: yaml.load(fp.read()),
+        "json": lambda fp: json.load(fp),
+        "hcl": lambda fp: hcl.load(fp),
     }
 
 
-def get_loader(format: str) -> callable:
+def get_loader(format: str) -> Callable:
     return loaders()[format]
 
 
 def create_environment(path: Path) -> Environment:
-    env = Environment(
-        loader=FileSystemLoader(str(path.absolute()))
-    )
+    env = Environment(loader=FileSystemLoader(str(path.absolute())))
     env.filters.update(filter_registry)
     return env
 
 
-def render_template(template: Path,
-                    env: Environment,
-                    context: Dict[str, Any]) -> str:
+def render_template(template: Path, env: Environment, context: Dict[str, Any]) -> str:
     tpl = get_template(template, env)
     return tpl.render(**context)
 
 
 def write(output: str, fd: io.TextIOWrapper) -> None:
     fd.write(output)
-    fd.write('\n')
+    fd.write("\n")
     fd.flush()
 
 
@@ -93,7 +99,7 @@ def default_context() -> Dict[str, Any]:
     return {
         "meta": {
             "date": datetime.utcnow(),
-            "platform": dict(platform.uname()._asdict())
+            "platform": dict(platform.uname()._asdict()),
         },
         "env": dict(os.environ),
     }

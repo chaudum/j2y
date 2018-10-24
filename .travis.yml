@@ -4,8 +4,9 @@ cache: pip
 python:
   - 3.6
 install:
-  - pip install -e .
+  - pip install -U pip setuptools wheel
+  - pip install -e ".[test]"
 script:
-  - python j2y/tests.py
+  - pytest
 notifications:
   email: true
