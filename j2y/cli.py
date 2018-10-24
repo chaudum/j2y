@@ -94,7 +94,8 @@ def default_context() -> Dict[str, Any]:
         "meta": {
             "date": datetime.utcnow(),
             "platform": dict(platform.uname()._asdict())
-        }
+        },
+        "env": dict(os.environ),
     }
 
 
