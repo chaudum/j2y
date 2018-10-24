@@ -18,24 +18,23 @@ Installation
 
 ``j2y`` is installed using ``pip``::
 
-  pip install j2y
+  $ pip install j2y
 
 Alternatively you can install directly from Github master branch::
 
-  pip install git+https://github.com/chaudum/j2y.git@master
+  $ pip install git+https://github.com/chaudum/j2y.git@master
 
 Usage
 -----
 
 By default, ``j2y`` takes a YAML_ file as input::
 
-  j2y template.j2 < values.yaml
+  $ j2y template.j2 < values.yaml
 
 Alternatively you can use JSON_ or HCL_ as input format::
 
-  j2y template.j2 -f json < values.json
-
-  j2y template.j2 -f hcl < values.hcl
+  $ j2y template.j2 -f json < values.json
+  $ j2y template.j2 -f hcl < values.hcl
 
 Run ``j2y -h`` to see all available options.
 
@@ -48,7 +47,7 @@ Bootstrapping
 Create a virtualenv_ and install the package as develop egg::
 
   $ python -m venv env
-  $ env/bin/activate
+  $ source env/bin/activate
   (env) $ pip install -e .
 
 Tests
