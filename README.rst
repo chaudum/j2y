@@ -74,13 +74,19 @@ Create a virtualenv_ and install the package as develop egg::
 Tests
 .....
 
-At the moment there are very simple test cases only. Test are written as native
-Python doctests. You can invoke them like so::
+At the moment there are very simple test cases only. Test are written as
+Python doctests and run using `pytest`_::
 
-  (env) $ python j2y/tests.py
+  (env) $ pip install -e ".[test]"
+  (env) $ pytest
+
+Pytest additionally runs the `black`_ linter and `mypy`_ static type checker.
 
 
 .. _YAML: http://yaml.org/spec/
 .. _JSON: https://www.json.org/
 .. _HCL: https://github.com/hashicorp/hcl
 .. _virtualenv: https://docs.python.org/3/tutorial/venv.html
+.. _pytest: https://docs.pytest.org/en/latest/
+.. _black: https://github.com/ambv/black
+.. _mypy: https://github.com/python/mypy
