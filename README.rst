@@ -3,10 +3,15 @@ j2y - A Jinja2 Template CLI
 
 .. image:: https://travis-ci.org/chaudum/j2y.svg?branch=master
     :target: https://travis-ci.org/chaudum/j2y
+    :alt: Travis CI
 
 .. image:: https://badge.fury.io/py/j2y.svg
     :target: http://badge.fury.io/py/j2y
     :alt: Python Package Index
+
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/ambv/black
+    :alt: Code Style: Black
 
 |
 
