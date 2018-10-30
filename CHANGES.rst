@@ -5,6 +5,9 @@ Changelog
 Unreleased
 ==========
 
+- *[FEATURE]* Add hashlib digest functions ``md5sum``, ``sha1sum``,
+  ``sha256sum`` and ``sha512sum`` as template filters.
+
 - *[FEATURE]* Provide environment variables as template variable ``env``.
 
 2018/10/23 0.1.0
