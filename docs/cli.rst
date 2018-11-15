@@ -48,7 +48,7 @@ Parse default arguments::
   >>> args.template
   PosixPath('template.j2')
   >>> args.context
-  <_pytest.capture.DontReadFromInput object at 0x...>
+  []
   >>> args.extra
   []
   >>> args.format
@@ -70,13 +70,18 @@ Change output file::
   >>> args.output
   <_io.TextIOWrapper name='outfile' mode='w' encoding='UTF-8'>
 
+.. hidden:: Remove output
+
+   >>> args.output.close()
+   >>> os.unlink(args.output.name)
+
 Provide input file, however, it needs to exist::
 
   >>> with tempfile.NamedTemporaryFile() as infile:
   ...     args = parse_args_safe(['j2y', 'template.j2', '-c', infile.name])
   ...     print(args.context)
-  ...     print(args.context.name == infile.name)
-  <_io.TextIOWrapper name='...' mode='r' encoding='UTF-8'>
+  ...     print(args.context[0].name == infile.name)
+  [<_io.TextIOWrapper name='...' mode='r' encoding='UTF-8'>]
   True
 
 Template Rendering

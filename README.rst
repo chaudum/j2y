@@ -41,6 +41,10 @@ Alternatively you can use JSON_ or HCL_ as input format::
   $ j2y template.j2 -f json < values.json
   $ j2y template.j2 -f hcl < values.hcl
 
+It's also possible to provide multiple input files::
+
+  $ j2y template.j2 --context v1.yaml --context v2.yaml
+
 Run ``j2y -h`` to see all available options.
 
 Template Variables

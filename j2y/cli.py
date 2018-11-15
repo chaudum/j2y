@@ -14,22 +14,28 @@ import platform
 from datetime import datetime
 
 from pathlib import Path
-from typing import Any, Callable, Dict
+from typing import Any, Callable, Dict, List
 from jinja2 import Template, Environment, FileSystemLoader
 
-from .util import parse_extra, tty_size, print_stderr
-from .filters import registry as filter_registry
+from j2y.util import parse_extra, tty_size, print_stderr
+from j2y.filters import registry as filter_registry
 
 
+# fmt: off
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("template", type=Path, help="path of the Jinja template")
+    parser.add_argument(
+        "template",
+        type=Path,
+        help="path of the Jinja template"
+    )
     parser.add_argument(
         "-c",
         "--context",
         type=argparse.FileType("r"),
-        default=sys.stdin,
-        help="input file for template context, defaults to stdin",
+        default=[],
+        action="append",
+        help="input file(s) for template context",
     )
     parser.add_argument(
         "-o",
@@ -50,20 +56,28 @@ def parse_args() -> argparse.Namespace:
         "--extra",
         action="append",
         default=[],
-        help="provide extra variables for template context via cli using key=value pair",
+        help="provide extra variables for template context "
+        "via cli using key=value pair",
     )
     parser.add_argument(
-        "-v", "--verbose", action="store_true", help="print template context to stderr"
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="print template context to stderr"
     )
     return parser.parse_args()
+# fmt: on
 
 
 def get_template(path: Path, env: Environment) -> Template:
     return env.get_template(str(path))
 
 
-def load_context(fp: io.TextIOWrapper, loader: Callable) -> Dict[str, Any]:
-    return loader(fp) or {}
+def load_contexts(fps: List[io.TextIOWrapper], loader: Callable) -> Dict[str, Any]:
+    context: Dict = {}
+    for fp in fps:
+        context.update(loader(fp) or {})
+    return context
 
 
 def loaders() -> Dict[str, Callable]:
@@ -116,7 +130,7 @@ def main():
     extra = parse_extra(args.extra)
     env = create_environment(Path(os.path.curdir))
     ctx = default_context()
-    ctx.update(load_context(args.context, get_loader(args.format)))
+    ctx.update(load_contexts(args.context, get_loader(args.format)))
     ctx.update(extra)
     if args.verbose:
         print_context(ctx, tty_size()[0])
