@@ -27,7 +27,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "template",
         type=Path,
-        help="path of the Jinja template"
+        help="Path to the Jinja template file."
     )
     parser.add_argument(
         "-c",
@@ -35,35 +35,41 @@ def parse_args() -> argparse.Namespace:
         type=argparse.FileType("r"),
         default=[],
         action="append",
-        help="input file(s) for template context",
+        help="Path to the input file that serves as source for the render context"
+        "of the Jinja template. This argument may be specified multiple times.",
     )
     parser.add_argument(
         "-o",
         "--output",
         type=argparse.FileType("w"),
         default=sys.stdout,
-        help="output file, defaults to stdout",
+        help="Path to the output file to which the rendered Jinja template is written"
+        "to. If the argument is omitted, j2y will print stdout.",
     )
     parser.add_argument(
         "-f",
         "--format",
         choices=loaders().keys(),
         default="yaml",
-        help="input file format",
+        help="File format of the input file(s) specified with --context."
+        " If multiple input files where specified they need to have the same file"
+        " format",
     )
     parser.add_argument(
         "-x",
         "--extra",
         action="append",
         default=[],
-        help="provide extra variables for template context "
-        "via cli using key=value pair",
+        help="Provide an additional variable for the Jinja template render context."
+        " The value of this argument needs to provided as key=value pair."
+        " This argument may be specified multiple times."
     )
     parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
-        help="print template context to stderr"
+        help="Print the Jinja template render context prior to the rendered template."
+        " The render context is printed to stdout."
     )
     return parser.parse_args()
 # fmt: on
