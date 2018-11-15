@@ -5,6 +5,9 @@ Changelog
 Unreleased
 ==========
 
+- *[FEATURE]* Add serialization functions ``json`` and ``yaml`` as template
+  filters.
+
 - *[FEATURE]* Add support for multiple input files using the ``-c`` or
   ``--context`` argument.
 
