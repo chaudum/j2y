@@ -5,6 +5,9 @@ Changelog
 Unreleased
 ==========
 
+- *[FEATURE]* Add support for multiple input files using the ``-c`` or
+  ``--context`` argument.
+
 - *[FEATURE]* Add hashlib digest functions ``md5sum``, ``sha1sum``,
   ``sha256sum`` and ``sha512sum`` as template filters.
 
