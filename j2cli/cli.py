@@ -17,13 +17,16 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List
 from jinja2 import Template, Environment, FileSystemLoader
 
-from j2y.util import parse_extra, tty_size, print_stderr
-from j2y.filters import registry as filter_registry
+from j2cli.util import parse_extra, tty_size, print_stderr
+from j2cli.filters import registry as filter_registry
 
 
 # fmt: off
 def parse_args(arguments: List[str]) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        prog="j2cli",
+        description=__doc__,
+    )
     parser.add_argument(
         "template",
         type=Path,
@@ -147,6 +150,15 @@ def entrypoint(args: argparse.Namespace) -> None:
     if args.verbose:
         print_context(ctx, tty_size()[0])
     write(render_template(args.template, env, ctx), args.output)
+
+
+def main_deprecated() -> None:
+    print_stderr(
+        "\033[31m"
+        "The command 'j2y' command is deprecated. Please use 'j2cli' instead."
+        "\033[0m"
+    )
+    main()
 
 
 def main() -> None:
