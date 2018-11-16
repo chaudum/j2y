@@ -22,7 +22,7 @@ from j2y.filters import registry as filter_registry
 
 
 # fmt: off
-def parse_args() -> argparse.Namespace:
+def parse_args(arguments: List[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "template",
@@ -71,7 +71,7 @@ def parse_args() -> argparse.Namespace:
         help="Print the Jinja template render context prior to the rendered template."
         " The render context is printed to stdout."
     )
-    return parser.parse_args()
+    return parser.parse_args(arguments)
 # fmt: on
 
 
@@ -131,8 +131,7 @@ def print_context(ctx: Dict[str, Any], width: int = 12) -> None:
     print_stderr("")
 
 
-def main():
-    args = parse_args()
+def entrypoint(args: argparse.Namespace) -> None:
     extra = parse_extra(args.extra)
     env = create_environment(Path(os.path.curdir))
     ctx = default_context()
@@ -141,3 +140,7 @@ def main():
     if args.verbose:
         print_context(ctx, tty_size()[0])
     write(render_template(args.template, env, ctx), args.output)
+
+
+def main() -> None:
+    entrypoint(parse_args(sys.argv[1:]))
