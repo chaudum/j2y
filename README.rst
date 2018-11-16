@@ -91,6 +91,11 @@ Python doctests and run using `pytest`_::
 
 Pytest additionally runs the `black`_ linter and `mypy`_ static type checker.
 
+The tests located in the ``docs/`` folder can also be built into HTML using
+`Sphinx`_::
+
+  (env) $ sphinx-build -E -W docs/ _build/
+
 
 .. _YAML: http://yaml.org/spec/
 .. _JSON: https://www.json.org/
@@ -99,3 +104,4 @@ Pytest additionally runs the `black`_ linter and `mypy`_ static type checker.
 .. _pytest: https://docs.pytest.org/en/latest/
 .. _black: https://github.com/ambv/black
 .. _mypy: https://github.com/python/mypy
+.. _Sphinx: http://www.sphinx-doc.org/en/master/

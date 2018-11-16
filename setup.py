@@ -37,7 +37,8 @@ setup(
             "pytest-flake8",
             "pytest-black==0.1.7",
             "pytest-mypy",
-        ]
+        ],
+        "docs": ["Sphinx>=1.8,<1.9"],
     },
     use_scm_version=True,
     classifiers=[
