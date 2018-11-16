@@ -11,7 +11,7 @@ Command Line Arguments
 
 ::
 
-  >>> from j2y.cli import parse_args
+  >>> from j2cli.cli import parse_args
 
 The following CLI argument tests require a helper function so we can read the
 output of ``argparse.ArgumentParser.parse_args()`` correctly.
@@ -19,7 +19,7 @@ output of ``argparse.ArgumentParser.parse_args()`` correctly.
 ::
 
   >>> def parse_args_safe(args):
-  ...     sys.argv[0] = "j2y"
+  ...     sys.argv[0] = "j2cli"
   ...     stderr = sys.stderr
   ...     sys.stderr = io.StringIO()
   ...     try:
@@ -36,9 +36,9 @@ Parse program invokation without arguments::
 
   >>> out = parse_args_safe([])
   >>> print(out)
-  usage: j2y [-h] [-c CONTEXT] [-o OUTPUT] [-f {yaml,json,hcl}] [-x EXTRA] [-v]
-             template
-  j2y: error: the following arguments are required: template
+  usage: j2cli [-h] [-c CONTEXT] [-o OUTPUT] [-f {yaml,json,hcl}] [-x EXTRA] [-v]
+               template
+  j2cli: error: the following arguments are required: template
 
 Parse default arguments::
 

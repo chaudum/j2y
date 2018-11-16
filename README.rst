@@ -1,5 +1,6 @@
-j2y - A Jinja2 Template CLI
-===========================
+==================
+j2y - A Jinja2 CLI
+==================
 
 .. image:: https://travis-ci.org/chaudum/j2y.svg?branch=master
     :target: https://travis-ci.org/chaudum/j2y
@@ -19,39 +20,44 @@ Render Jinja2 templates on the command line using a YAML_, JSON_ or HCL_ file
 as input for the render context.
 
 💽 Installation
----------------
+==============
 
 ``j2y`` is installed using ``pip``::
 
   $ pip install j2y
+
+.. Note::
+
+   The name of this Python package is ``j2y``, but it will be renamed to
+   ``j2-cli`` with the next major release.
 
 Alternatively you can install directly from Github master branch::
 
   $ pip install git+https://github.com/chaudum/j2y.git@master
 
 👩‍💻 Usage
-----------------
+=========
 
-By default, ``j2y`` takes a YAML_ file as input::
+By default, the ``j2cli`` command takes a YAML_ file as input::
 
-  $ j2y template.j2 < values.yaml
+  $ j2cli template.j2 < values.yaml
 
 Alternatively you can use JSON_ or HCL_ as input format::
 
-  $ j2y template.j2 -f json < values.json
-  $ j2y template.j2 -f hcl < values.hcl
+  $ j2cli template.j2 -f json < values.json
+  $ j2cli template.j2 -f hcl < values.hcl
 
 It's also possible to provide multiple input files::
 
-  $ j2y template.j2 --context v1.yaml --context v2.yaml
+  $ j2cli template.j2 --context v1.yaml --context v2.yaml
 
-Run ``j2y -h`` to see all available options.
+Run ``j2cli -h`` to see all available options.
 
 Template Variables
-..................
+------------------
 
-Additionally to the variables provided by the input file, ``j2y`` also provides
-built-in default variables. These variables are:
+Additionally to the variables provided by the input file, ``j2cli`` also
+provides built-in default variables. These variables are:
 
 :meta.date:
   Type:  ``datetime``
@@ -69,10 +75,10 @@ built-in default variables. These variables are:
   Value: All environment variables (output of ``os.environ``).
 
 ⚗️ Local Development
---------------------
+===================
 
 Bootstrapping
-.............
+-------------
 
 Create a virtualenv_ and install the package as develop egg::
 
@@ -81,7 +87,7 @@ Create a virtualenv_ and install the package as develop egg::
   (env) $ pip install -e .
 
 Tests
-.....
+-----
 
 At the moment there are very simple test cases only. Test are written as
 Python doctests and run using pytest_::
@@ -90,6 +96,9 @@ Python doctests and run using pytest_::
   (env) $ pytest
 
 Pytest additionally runs the black_ linter and mypy_ static type checker.
+
+Documentation
+.............
 
 The tests located in the ``docs/`` folder can also be built into HTML using
 Sphinx_::

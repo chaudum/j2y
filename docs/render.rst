@@ -10,7 +10,7 @@ Template Rendering
 
 Setup environment::
 
-  >>> from j2y.cli import create_environment, render_template
+  >>> from j2cli.cli import create_environment, render_template
 
   >>> tpl = tempfile.NamedTemporaryFile()
   >>> os.chdir(Path(tpl.name).parent)
@@ -30,4 +30,3 @@ Render template with context::
   ...     {'name': 'World'}
   ... )
   'Hello World!'
-

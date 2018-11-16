@@ -5,6 +5,9 @@ Changelog
 Unreleased
 ==========
 
+- Deprecate ``j2y`` command in favour of ``j2cli`` as it will be removed in the
+  next version.
+
 - *[SECURITY]* Update ``jinja2`` and ``pyyaml`` dependencies.
 
 2018/11/21 0.2.1
