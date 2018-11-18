@@ -19,7 +19,7 @@ Render Jinja2 templates on the command line using a YAML_, JSON_ or HCL_ file
 as input for the render context.
 
 💽 Installation
---------------
+---------------
 
 ``j2y`` is installed using ``pip``::
 
@@ -30,7 +30,7 @@ Alternatively you can install directly from Github master branch::
   $ pip install git+https://github.com/chaudum/j2y.git@master
 
 👩‍💻 Usage
----------
+----------------
 
 By default, ``j2y`` takes a YAML_ file as input::
 
@@ -69,7 +69,7 @@ built-in default variables. These variables are:
   Value: All environment variables (output of ``os.environ``).
 
 ⚗️ Local Development
--------------------
+--------------------
 
 Bootstrapping
 .............
@@ -84,15 +84,15 @@ Tests
 .....
 
 At the moment there are very simple test cases only. Test are written as
-Python doctests and run using `pytest`_::
+Python doctests and run using pytest_::
 
   (env) $ pip install -e ".[test]"
   (env) $ pytest
 
-Pytest additionally runs the `black`_ linter and `mypy`_ static type checker.
+Pytest additionally runs the black_ linter and mypy_ static type checker.
 
 The tests located in the ``docs/`` folder can also be built into HTML using
-`Sphinx`_::
+Sphinx_::
 
   (env) $ sphinx-build -E -W docs/ _build/
 
