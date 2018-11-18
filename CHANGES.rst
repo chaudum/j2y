@@ -5,6 +5,9 @@ Changelog
 Unreleased
 ==========
 
+2018/11/18 0.2.0
+================
+
 - *[FEATURE]* Add serialization functions ``json`` and ``yaml`` as template
   filters.
 
