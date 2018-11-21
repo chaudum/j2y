@@ -5,6 +5,9 @@ Changelog
 Unreleased
 ==========
 
+2018/11/21 0.2.1
+================
+
 - *[FIX]* Fix the behaviour of the default input that broke with the
   introduction of multiple input files. It is now possible again to redirect
   stdin to the command without specifying the ``-c/--context`` argument, such
