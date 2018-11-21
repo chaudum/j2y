@@ -135,7 +135,14 @@ def entrypoint(args: argparse.Namespace) -> None:
     extra = parse_extra(args.extra)
     env = create_environment(Path(os.path.curdir))
     ctx = default_context()
-    ctx.update(load_contexts(args.context, get_loader(args.format)))
+
+    contexts = args.context
+    if not contexts:
+        print_stderr("stdin as default value for --context argument is deprecated.")
+        print_stderr("Please specify -c or --context explicitly, e.g. `-c -`")
+        contexts = [sys.stdin]
+
+    ctx.update(load_contexts(contexts, get_loader(args.format)))
     ctx.update(extra)
     if args.verbose:
         print_context(ctx, tty_size()[0])

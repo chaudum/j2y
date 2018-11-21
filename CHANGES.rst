@@ -5,6 +5,12 @@ Changelog
 Unreleased
 ==========
 
+- *[FIX]* Fix the behaviour of the default input that broke with the
+  introduction of multiple input files. It is now possible again to redirect
+  stdin to the command without specifying the ``-c/--context`` argument, such
+  as ``j2y template.j2 < values.yaml``. Default stdin is ignored, however, if
+  additional input files are provided.
+
 2018/11/18 0.2.0
 ================
 
