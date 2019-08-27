@@ -5,6 +5,8 @@ Changelog
 Unreleased
 ==========
 
+- *[SECURITY]* Update ``jinja2`` and ``pyyaml`` dependencies.
+
 2018/11/21 0.2.1
 ================
 
