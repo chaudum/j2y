@@ -103,7 +103,7 @@ Documentation
 The tests located in the ``docs/`` folder can also be built into HTML using
 Sphinx_::
 
-  (env) $ sphinx-build -E -W docs/ _build/
+  (env) $ sphinx-build -E -W docs-src/ docs/
 
 
 .. _YAML: http://yaml.org/spec/
