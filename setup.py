@@ -22,6 +22,7 @@ setup(
     author_email="christian@christianhaudum.at",
     description="A command line interface for rendering Jinja2 templates.",
     long_description=long_description,
+    long_description_content_type="text/x-rst",
     platforms=["any"],
     license="Apache License 2.0",
     packages=["j2cli"],

@@ -19,8 +19,8 @@ j2y - A Jinja2 CLI
 Render Jinja2 templates on the command line using a YAML_, JSON_ or HCL_ file
 as input for the render context.
 
-💽 Installation
-==============
+Installation
+============
 
 ``j2y`` is installed using ``pip``::
 
@@ -35,8 +35,8 @@ Alternatively you can install directly from Github master branch::
 
   $ pip install git+https://github.com/chaudum/j2y.git@master
 
-👩‍💻 Usage
-=========
+Usage
+=====
 
 By default, the ``j2cli`` command takes a YAML_ file as input::
 
@@ -74,8 +74,8 @@ provides built-in default variables. These variables are:
 
   Value: All environment variables (output of ``os.environ``).
 
-⚗️ Local Development
-===================
+Local Development
+=================
 
 Bootstrapping
 -------------
