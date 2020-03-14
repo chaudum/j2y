@@ -32,7 +32,7 @@ setup(
     install_requires=requirements,
     setup_requires=["setuptools_scm"],
     extras_require={
-        "test": ["pytest>=3.5", "pytest-flake8", "pytest-black", "pytest-mypy"],
+        "test": ["pytest>=5.4", "pytest-flake8", "pytest-black", "pytest-mypy"],
         "docs": ["Sphinx>=1.8,<1.9"],
     },
     use_scm_version=True,
@@ -45,5 +45,6 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
 )
