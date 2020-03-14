@@ -5,6 +5,9 @@ Changelog
 Unreleased
 ==========
 
+2020/03/14 0.3.0
+================
+
 - Deprecate ``j2y`` command in favour of ``j2cli`` as it will be removed in the
   next version.
 
