@@ -5,6 +5,9 @@ Changelog
 Unreleased
 ==========
 
+- Fixed bug that prevented rendering templates that are in different directory
+  than the current working directory.
+
 2020/03/14 0.3.0
 ================
 
