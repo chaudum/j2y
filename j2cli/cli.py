@@ -2,7 +2,6 @@
 j2y - a super simple Jinja2 templating command line interface
 """
 
-import io
 import os
 import sys
 import hcl
@@ -14,8 +13,8 @@ import platform
 from datetime import datetime
 
 from pathlib import Path
-from typing import Any, Callable, Dict, List
-from jinja2 import Template, Environment, FileSystemLoader
+from typing import Any, Callable, Dict, List, TextIO
+from jinja2 import Environment, FileSystemLoader
 
 from j2cli.util import parse_extra, tty_size, print_stderr
 from j2cli.filters import registry as filter_registry
@@ -30,7 +29,7 @@ def parse_args(arguments: List[str]) -> argparse.Namespace:
     parser.add_argument(
         "template",
         type=Path,
-        help="Path to the Jinja template file."
+        help="Path to the Jinja2 template file."
     )
     parser.add_argument(
         "-c",
@@ -78,11 +77,7 @@ def parse_args(arguments: List[str]) -> argparse.Namespace:
 # fmt: on
 
 
-def get_template(path: Path, env: Environment) -> Template:
-    return env.get_template(str(path))
-
-
-def load_contexts(fps: List[io.TextIOWrapper], loader: Callable) -> Dict[str, Any]:
+def load_contexts(fps: List[TextIO], loader: Callable) -> Dict[str, Any]:
     context: Dict = {}
     for fp in fps:
         context.update(loader(fp) or {})
@@ -108,11 +103,11 @@ def create_environment(path: Path) -> Environment:
 
 
 def render_template(template: Path, env: Environment, context: Dict[str, Any]) -> str:
-    tpl = get_template(template, env)
+    tpl = env.get_template(str(template))
     return tpl.render(**context)
 
 
-def write(output: str, fd: io.TextIOWrapper) -> None:
+def write(output: str, fd: TextIO) -> None:
     fd.write(output)
     fd.write("\n")
     fd.flush()
@@ -134,22 +129,31 @@ def print_context(ctx: Dict[str, Any], width: int = 12) -> None:
     print_stderr("")
 
 
-def entrypoint(args: argparse.Namespace) -> None:
-    extra = parse_extra(args.extra)
-    env = create_environment(Path(os.path.curdir))
+def entrypoint(
+    template: str,
+    output: TextIO,
+    *,
+    contexts: List[TextIO] = None,
+    extra: List[str] = None,
+    format: str = "yaml",
+    verbose: bool = False,
+) -> None:
+    extras = parse_extra(extra or [])
+    template_path = Path(template)
+    env = create_environment(template_path.parent)
     ctx = default_context()
 
-    contexts = args.context
     if not contexts:
         print_stderr("stdin as default value for --context argument is deprecated.")
         print_stderr("Please specify -c or --context explicitly, e.g. `-c -`")
         contexts = [sys.stdin]
 
-    ctx.update(load_contexts(contexts, get_loader(args.format)))
-    ctx.update(extra)
-    if args.verbose:
+    ctx.update(load_contexts(contexts, get_loader(format)))
+    ctx.update(extras)
+    if verbose:
         print_context(ctx, tty_size()[0])
-    write(render_template(args.template, env, ctx), args.output)
+    relative_template_path = template_path.relative_to(template_path.parent)
+    write(render_template(relative_template_path, env, ctx), output)
 
 
 def main_deprecated() -> None:
@@ -162,4 +166,12 @@ def main_deprecated() -> None:
 
 
 def main() -> None:
-    entrypoint(parse_args(sys.argv[1:]))
+    args = parse_args(sys.argv[1:])
+    entrypoint(
+        args.template,
+        args.output,
+        contexts=args.context,
+        extra=args.extra,
+        format=args.format,
+        verbose=args.verbose,
+    )
